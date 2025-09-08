@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en-US">
+
+<head>
+  <meta charset="utf-8">
+  <title>Hackathon 2025</title>
+  <link rel="stylesheet" href="assets/css/portal.css">
+  <link rel="stylesheet" href="assets/css/all.min.css">
+  <link rel="stylesheet" href="assets/css/style.css">
+</head>
+
+<body class="app">
+
+  <my-header></my-header>
+
+  <div class="app-wrapper ">
+    <div class="app-content pt-3 p-md-3 p-lg-4">
+      <div class="container-xl">
+        <h1 class="text-center">รายการอาหาร</h1>
+      </div>
+    </div>
+  </div>
+
+  <div id="food-list" class="app-content pt-3 p-md-3 p-lg-4">
+    <div class="container-xl">
+        <h1 class="text-center"></h1>
+      </div>
+  </div>
+
+  <script src="assets/js/partial.js"></script>
+  <script src="assets/js/all.min.js"></script>
+  <script src="assets/js/popper.min.js"></script>
+  <script src="assets/js/bootstrap.bundle.min.js"></script>
+  <script src="assets/js/app.js"></script>
+  <script src="assets/js/script.js"></script>
+</body>
+
+</html>
+
+<script>
+ fetch("http://54.169.154.143:3096/food-menus", {
+      method: 'GET',
+      redirect: 'follow'
+    })
+    .then(response => response.json())
+    .then(result => {
+      console.log(result);
+      let data = '';
+      result.forEach(food => {
+        data += `
+          <div class="card" style="width: 18rem;">
+            <img src="${food.image}" class="card-img-top" alt="xxx">
+            <div class="card-body">
+               <h6 class="card-title text-danger">${food.price}</h6>
+              <h5 class="card-title">${food.name}</h5>
+              <h6 class="card-title">${food.name_en}</h6>
+              <p class="card-text">${food.description}</p>
+              <a href="#" class="btn btn-primary">Go somewhere</a>
+            </div>
+          </div>
+        `
+      });
+      document.getElementById('food-list').innerHTML = data;
+    })
+    .catch(error => console.log('error', error));
+</script>
+
+
+
